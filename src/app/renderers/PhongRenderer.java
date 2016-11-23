@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.calculations;
+package app.renderers;
 
 import app.model.Material;
 import app.model.Point3D;
@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
  *
  * @author Piotr Pyśk
  */
-public class PhongRenderer {
+public class PhongRenderer implements Renderer {
 
     private static final double IA = 100.0;
     private static final double IP = 60000.0;
@@ -25,6 +25,7 @@ public class PhongRenderer {
     private Point3D lightSource = new Point3D(0, 0, 200);
     private Point3D observer = new Point3D(0, 0, IMAGE_SIZE);
 
+    @Override
     public BufferedImage render(BufferedImage image, Material material) {
         BufferedImage newImage = new BufferedImage(IMAGE_SIZE, IMAGE_SIZE, BufferedImage.TYPE_INT_RGB);
 

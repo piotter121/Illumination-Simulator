@@ -31,7 +31,7 @@ public class MaterialFactory {
         mirror = new Material(0.6, 0.4, 100);
     }
 
-    public Material getIntermediate() {
+    public Material getPlastick() {
         return intermediate;
     }
 

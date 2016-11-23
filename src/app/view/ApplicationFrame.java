@@ -4,7 +4,7 @@
  */
 package app.view;
 
-import app.calculations.PhongRenderer;
+import app.renderers.PhongRenderer;
 import app.model.Material;
 import app.model.MaterialFactory;
 import java.awt.Color;
@@ -22,11 +22,11 @@ public class ApplicationFrame extends JFrame {
     private final int w = 400;
     private final int h = 400;
 
-    private PhongRenderer phong;
+    private PhongRenderer renderer;
     private BufferedImage panelCopy;
     private Material mirror;
     private Material wood;
-    private Material middle;
+    private Material plastick;
 
     public ApplicationFrame() {
         initComponents();
@@ -34,21 +34,21 @@ public class ApplicationFrame extends JFrame {
         Graphics2D graphics2D = panelCopy.createGraphics();
         graphics2D.setColor(Color.darkGray);
         graphics2D.fillOval(w / 2 - 150, h / 2 - 150, 300, 300);
-        phong = new PhongRenderer();
+        renderer = new PhongRenderer();
         mirror = MaterialFactory.getInstance().getMirror();
         wood = MaterialFactory.getInstance().getWood();
-        middle = MaterialFactory.getInstance().getIntermediate();
+        plastick = MaterialFactory.getInstance().getPlastick();
 
         refresh();
     }
 
     private void refresh() {
-        sphere1.setIcon(new ImageIcon(phong.render(panelCopy, mirror)));
+        sphere1.setIcon(new ImageIcon(renderer.render(panelCopy, mirror)));
         sphere1.repaint();
-//        sphere2.setIcon(new ImageIcon(phong.render(panelCopy, wood)));
-//        sphere2.repaint();
-//        sphere3.setIcon(new ImageIcon(phong.render(panelCopy, middle)));
-//        sphere3.repaint();
+        sphere2.setIcon(new ImageIcon(renderer.render(panelCopy, wood)));
+        sphere2.repaint();
+        sphere3.setIcon(new ImageIcon(renderer.render(panelCopy, plastick)));
+        sphere3.repaint();
     }
 
     /**
