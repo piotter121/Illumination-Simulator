@@ -7,10 +7,13 @@ package app.view;
 import app.renderers.PhongRenderer;
 import app.model.Material;
 import app.model.MaterialFactory;
+import app.renderers.Renderer;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 /**
@@ -22,33 +25,40 @@ public class ApplicationFrame extends JFrame {
     private final int w = 400;
     private final int h = 400;
 
-    private PhongRenderer renderer;
+    private Renderer renderer = new PhongRenderer();
     private BufferedImage panelCopy;
-    private Material mirror;
-    private Material wood;
-    private Material plastick;
+
+    private final Material mirror = MaterialFactory.getInstance().getMirror();
+    private final Material wood = MaterialFactory.getInstance().getWood();
+    private final Material plastick = MaterialFactory.getInstance().getPlastick();
+
+    private JComponent sphere1;
 
     public ApplicationFrame() {
-        initComponents();
         panelCopy = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = panelCopy.createGraphics();
         graphics2D.setColor(Color.darkGray);
         graphics2D.fillOval(w / 2 - 150, h / 2 - 150, 300, 300);
-        renderer = new PhongRenderer();
-        mirror = MaterialFactory.getInstance().getMirror();
-        wood = MaterialFactory.getInstance().getWood();
-        plastick = MaterialFactory.getInstance().getPlastick();
-
+        initComponents();
+        initSpheres();
         refresh();
     }
 
     private void refresh() {
-        sphere1.setIcon(new ImageIcon(renderer.render(panelCopy, mirror)));
+//        sphere1.setIcon(new ImageIcon(renderer.render(panelCopy, mirror)));
         sphere1.repaint();
         sphere2.setIcon(new ImageIcon(renderer.render(panelCopy, wood)));
         sphere2.repaint();
         sphere3.setIcon(new ImageIcon(renderer.render(panelCopy, plastick)));
         sphere3.repaint();
+    }
+
+    private void initSpheres() {
+        sphere1 = new SphereImage(mirror, renderer);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        renderPanel.add(sphere1, gbc);
     }
 
     /**
@@ -59,41 +69,46 @@ public class ApplicationFrame extends JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        sphere1 = new javax.swing.JLabel();
+        renderPanel = new javax.swing.JPanel();
         sphere2 = new javax.swing.JLabel();
         sphere3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Model Phonga");
 
+        renderPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        renderPanel.add(sphere2, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        renderPanel.add(sphere3, gridBagConstraints);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(sphere1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sphere2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sphere3, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(renderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(105, 105, 105)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sphere1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sphere2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sphere3, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(85, Short.MAX_VALUE)
+                .addComponent(renderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel sphere1;
+    private javax.swing.JPanel renderPanel;
     private javax.swing.JLabel sphere2;
     private javax.swing.JLabel sphere3;
     // End of variables declaration//GEN-END:variables

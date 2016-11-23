@@ -19,20 +19,20 @@ public class MaterialFactory {
     }
 
     private Material mirror;
-    private Material intermediate;
+    private Material plastick;
     private Material wood;
 
     private MaterialFactory() {
         //wood = new Material(0.25, 0.75, 5);
         wood = new Material(0.4, 0.6, 10);
         //intermediate = new Material(0.5, 0.5, 10);
-        intermediate = new Material(0.2, 0.9, 60);
+        plastick = new Material(0.2, 0.9, 60);
         //mirror = new Material(0.75, 0.25, 100);
         mirror = new Material(0.6, 0.4, 100);
     }
 
     public Material getPlastick() {
-        return intermediate;
+        return plastick;
     }
 
     public Material getMirror() {
