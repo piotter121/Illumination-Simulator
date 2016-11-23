@@ -19,11 +19,9 @@ public class PhongRenderer implements Renderer {
     private static final double IA = 100.0;
     private static final double IP = 60000.0;
     private static final double KA = 0.4;
-    private static final int step = 10;
     public static final int IMAGE_SIZE = 400;
 
     private Point3D lightSource = new Point3D(0, 0, 200);
-    private Point3D observer = new Point3D(0, 0, IMAGE_SIZE);
 
     @Override
     public BufferedImage render(BufferedImage image, Material material) {
@@ -41,12 +39,10 @@ public class PhongRenderer implements Renderer {
 
                     Vector sour = computeVector(point, lightSource);
                     Vector vector = point.toVector();
-                    Vector vobs = observer.toVector();
                     Vector sour2 = computeVector(lightSource, point);
 
                     vector.normalize();
                     sour.normalize();
-                    vobs.normalize();
 
                     double scalar = scalar(sour, vector);
                     double cosAlpha = computeCosAlpha(sour2, vector);
@@ -111,17 +107,40 @@ public class PhongRenderer implements Renderer {
         return scalar(v, b) / len;
     }
 
-    private Vector reflectedVector(Vector v, Vector norm) {
-        Vector reflect = norm.multiply(2 * norm.multiply(v));
-        reflect.podejmij(v);
-        reflect.normalize();
-        return reflect;
-    }
-
     private double fatt(Point3D p) {
         return 1.0 / Math.sqrt(Math.pow(p.getX() + lightSource.getX(), 2)
                 + Math.pow(p.getY() + lightSource.getY(), 2)
                 + Math.pow(p.getZ() + lightSource.getZ(), 2));
+    }
+
+    @Override
+    public int getLightX() {
+        return (int) lightSource.getX();
+    }
+
+    @Override
+    public int getLightY() {
+        return (int) lightSource.getY();
+    }
+
+    @Override
+    public int getLightZ() {
+        return (int) lightSource.getZ();
+    }
+
+    @Override
+    public void setLightX(int x) {
+        lightSource.setX(x);
+    }
+
+    @Override
+    public void setLightY(int y) {
+        lightSource.setY(y);
+    }
+
+    @Override
+    public void setLightZ(int z) {
+        lightSource.setZ(z);
     }
 
 }

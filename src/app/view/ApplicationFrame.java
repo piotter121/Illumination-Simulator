@@ -4,17 +4,17 @@
  */
 package app.view;
 
-import app.renderers.PhongRenderer;
 import app.model.Material;
 import app.model.MaterialFactory;
+import app.renderers.PhongRenderer;
 import app.renderers.Renderer;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JSpinner;
 
 /**
  *
@@ -25,31 +25,26 @@ public class ApplicationFrame extends JFrame {
     private final int w = 400;
     private final int h = 400;
 
-    private Renderer renderer = new PhongRenderer();
-    private BufferedImage panelCopy;
+    private Renderer renderer;
 
     private final Material mirror = MaterialFactory.getInstance().getMirror();
     private final Material wood = MaterialFactory.getInstance().getWood();
     private final Material plastick = MaterialFactory.getInstance().getPlastick();
 
-    private JComponent sphere1;
+    private SphereImage sphere1;
+    private SphereImage sphere2;
+    private SphereImage sphere3;
 
-    public ApplicationFrame() {
-        panelCopy = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics2D = panelCopy.createGraphics();
-        graphics2D.setColor(Color.darkGray);
-        graphics2D.fillOval(w / 2 - 150, h / 2 - 150, 300, 300);
+    public ApplicationFrame(Renderer renderer) {
+        this.renderer = renderer;
         initComponents();
         initSpheres();
         refresh();
     }
 
-    private void refresh() {
-//        sphere1.setIcon(new ImageIcon(renderer.render(panelCopy, mirror)));
+    public final void refresh() {
         sphere1.repaint();
-        sphere2.setIcon(new ImageIcon(renderer.render(panelCopy, wood)));
         sphere2.repaint();
-        sphere3.setIcon(new ImageIcon(renderer.render(panelCopy, plastick)));
         sphere3.repaint();
     }
 
@@ -59,6 +54,22 @@ public class ApplicationFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 0;
         renderPanel.add(sphere1, gbc);
+
+        sphere2 = new SphereImage(wood, renderer);
+        gbc.gridx = 1;
+        renderPanel.add(sphere2, gbc);
+
+        sphere3 = new SphereImage(plastick, renderer);
+        gbc.gridx = 2;
+        renderPanel.add(sphere3, gbc);
+    }
+
+    public JButton getRenderButton() {
+        return renderButton;
+    }
+
+    public Renderer getRenderer() {
+        return renderer;
     }
 
     /**
@@ -70,46 +81,140 @@ public class ApplicationFrame extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         renderPanel = new javax.swing.JPanel();
-        sphere2 = new javax.swing.JLabel();
-        sphere3 = new javax.swing.JLabel();
+        controlsPanel = new javax.swing.JPanel();
+        lightpoitnLabel = new javax.swing.JLabel();
+        xCordPanel = new javax.swing.JPanel();
+        xLabel = new javax.swing.JLabel();
+        xCordSpinner = new javax.swing.JSpinner();
+        yCordPanel = new javax.swing.JPanel();
+        yLabel = new javax.swing.JLabel();
+        yCordSpinner = new javax.swing.JSpinner();
+        zCordPanel = new javax.swing.JPanel();
+        zLabel = new javax.swing.JLabel();
+        zCordSpinner = new javax.swing.JSpinner();
+        renderButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Model Phonga");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
+        renderPanel.setMinimumSize(new java.awt.Dimension(1200, 400));
+        renderPanel.setPreferredSize(new java.awt.Dimension(1200, 400));
         renderPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        getContentPane().add(renderPanel, gridBagConstraints);
+
+        controlsPanel.setLayout(new java.awt.GridBagLayout());
+
+        lightpoitnLabel.setText("Punkt światła");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        controlsPanel.add(lightpoitnLabel, gridBagConstraints);
+
+        xCordPanel.setLayout(new java.awt.GridBagLayout());
+
+        xLabel.setText("x:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 2, 4, 2);
+        xCordPanel.add(xLabel, gridBagConstraints);
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${renderer.lightX}"), xCordSpinner, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        renderPanel.add(sphere2, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        renderPanel.add(sphere3, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(4, 2, 4, 2);
+        xCordPanel.add(xCordSpinner, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(renderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(85, Short.MAX_VALUE)
-                .addComponent(renderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        controlsPanel.add(xCordPanel, gridBagConstraints);
+
+        yCordPanel.setLayout(new java.awt.GridBagLayout());
+
+        yLabel.setText("y:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 2, 4, 2);
+        yCordPanel.add(yLabel, gridBagConstraints);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${renderer.lightY}"), yCordSpinner, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 2, 4, 2);
+        yCordPanel.add(yCordSpinner, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        controlsPanel.add(yCordPanel, gridBagConstraints);
+
+        zCordPanel.setLayout(new java.awt.GridBagLayout());
+
+        zLabel.setText("z:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 2, 4, 2);
+        zCordPanel.add(zLabel, gridBagConstraints);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${renderer.lightZ}"), zCordSpinner, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 2, 4, 2);
+        zCordPanel.add(zCordSpinner, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        controlsPanel.add(zCordPanel, gridBagConstraints);
+
+        renderButton.setText("Renderuj");
+        controlsPanel.add(renderButton, new java.awt.GridBagConstraints());
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(controlsPanel, gridBagConstraints);
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel controlsPanel;
+    private javax.swing.JLabel lightpoitnLabel;
+    private javax.swing.JButton renderButton;
     private javax.swing.JPanel renderPanel;
-    private javax.swing.JLabel sphere2;
-    private javax.swing.JLabel sphere3;
+    private javax.swing.JPanel xCordPanel;
+    private javax.swing.JSpinner xCordSpinner;
+    private javax.swing.JLabel xLabel;
+    private javax.swing.JPanel yCordPanel;
+    private javax.swing.JSpinner yCordSpinner;
+    private javax.swing.JLabel yLabel;
+    private javax.swing.JPanel zCordPanel;
+    private javax.swing.JSpinner zCordSpinner;
+    private javax.swing.JLabel zLabel;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

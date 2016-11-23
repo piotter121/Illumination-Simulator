@@ -12,8 +12,15 @@ import java.awt.image.BufferedImage;
  *
  * @author piotr
  */
-@FunctionalInterface
 public interface Renderer {
 
     BufferedImage render(BufferedImage image, Material material);
+    
+    int getLightX();
+    int getLightY();
+    int getLightZ();
+    
+    void setLightX(int x);
+    void setLightY(int y);
+    void setLightZ(int z);
 }

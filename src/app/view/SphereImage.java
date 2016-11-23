@@ -30,6 +30,7 @@ public class SphereImage extends JComponent {
         this.rederer = renderer;
         this.imageCopy = new BufferedImage(DIMENSION, DIMENSION, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = this.imageCopy.createGraphics();
+        graphics.setColor(Color.DARK_GRAY);
         Shape oval = new Ellipse2D.Double(
                 DIMENSION / 2 - RADIUS, DIMENSION / 2 - RADIUS,
                 RADIUS * 2, RADIUS * 2
