@@ -127,6 +127,9 @@ public class ApplicationFrame extends JFrame {
         gridBagConstraints.insets = new java.awt.Insets(4, 2, 4, 2);
         xCordPanel.add(xLabel, gridBagConstraints);
 
+        xCordSpinner.setMinimumSize(new java.awt.Dimension(50, 28));
+        xCordSpinner.setPreferredSize(new java.awt.Dimension(50, 28));
+
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${renderer.lightX}"), xCordSpinner, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
@@ -149,6 +152,9 @@ public class ApplicationFrame extends JFrame {
         gridBagConstraints.insets = new java.awt.Insets(4, 2, 4, 2);
         yCordPanel.add(yLabel, gridBagConstraints);
 
+        yCordSpinner.setMinimumSize(new java.awt.Dimension(50, 28));
+        yCordSpinner.setPreferredSize(new java.awt.Dimension(50, 28));
+
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${renderer.lightY}"), yCordSpinner, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
@@ -170,6 +176,9 @@ public class ApplicationFrame extends JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(4, 2, 4, 2);
         zCordPanel.add(zLabel, gridBagConstraints);
+
+        zCordSpinner.setMinimumSize(new java.awt.Dimension(50, 28));
+        zCordSpinner.setPreferredSize(new java.awt.Dimension(50, 28));
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${renderer.lightZ}"), zCordSpinner, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
