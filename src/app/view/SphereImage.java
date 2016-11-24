@@ -31,13 +31,11 @@ public class SphereImage extends JComponent {
         this.imageCopy = new BufferedImage(DIMENSION, DIMENSION, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = this.imageCopy.createGraphics();
         graphics.setColor(Color.DARK_GRAY);
-        Shape oval = new Ellipse2D.Double(
-                DIMENSION / 2 - RADIUS, DIMENSION / 2 - RADIUS,
-                RADIUS * 2, RADIUS * 2
-        );
-        graphics.fill(oval);
+        final double start = DIMENSION / 2 - RADIUS;
+        final double diameter = RADIUS * 2;
+        Shape circle = new Ellipse2D.Double(start, start, diameter, diameter);
+        graphics.fill(circle);
         setPreferredSize(new Dimension(DIMENSION, DIMENSION));
-        setBackground(new Color(240, 240, 240));
     }
 
     @Override

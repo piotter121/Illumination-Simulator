@@ -7,6 +7,7 @@ package app.renderers;
 import app.model.Material;
 import app.model.Point3D;
 import app.model.Vector;
+import app.view.SphereImage;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
@@ -35,7 +36,7 @@ public class PhongRenderer implements Renderer {
                 int pixel = pixels[j];
 
                 if (pixel != -16777216) {
-                    Point3D point = computeZ(i - 250, j - 250);
+                    Point3D point = computeZ(i - SphereImage.DIMENSION / 2, j - SphereImage.DIMENSION / 2);
 
                     Vector sour = computeVector(point, lightSource);
                     Vector vector = point.toVector();
@@ -94,17 +95,13 @@ public class PhongRenderer implements Renderer {
                 + v.getZ() * b.getZ();
     }
 
-    private double computeCosAlpha(Vector v, Vector b) {
-        double len = Math.sqrt(v.getX() * v.getX()
-                + v.getY() * v.getY()
-                + v.getZ() * v.getZ())
-                * Math.sqrt(b.getX() * b.getX()
-                        + b.getY() * b.getY()
-                        + b.getZ() * b.getZ());
-        if (scalar(v, b) > 0) {
+    private double computeCosAlpha(Vector a, Vector b) {
+        double len = Math.sqrt(a.getX() * a.getX() + a.getY() * a.getY() + a.getZ() * a.getZ())
+                * Math.sqrt(b.getX() * b.getX() + b.getY() * b.getY() + b.getZ() * b.getZ());
+        if (scalar(a, b) > 0) {
             return 0;
         }
-        return scalar(v, b) / len;
+        return scalar(a, b) / len;
     }
 
     private double fatt(Point3D p) {
